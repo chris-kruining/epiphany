@@ -3,6 +3,7 @@ import { expose, windowEndpoint } from 'comlink';
 import { Bridge, Framework, Flavor } from './types.js';
 import { FiberNode, getNodeFromElement } from './framework/react.js';
 import { getDetails } from './flavor/remix.js';
+import React from 'react';
 
 const framework: Framework<FiberNode> = {
     getNodeFromElement,
