@@ -5,9 +5,10 @@ const conf = {
     outbase: 'src',
     bundle: true,
     sourcemap: true,
-    minify: false,
+    minify: true,
     platform: 'node',
     target: [ 'esnext' ],
+    external: [ 'react', 'react-dom' ],
 };
 
 await build({
