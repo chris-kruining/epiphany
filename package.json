@@ -11,7 +11,7 @@
     "type": "module",
     "types": "./lib/index.d.ts",
     "scripts": {
-        "test": "jasmine",
+        "test": "echo \"no tests yet\"",
         "build": "node ./esbuild.mjs && tsc"
     },
     "dependencies": {
