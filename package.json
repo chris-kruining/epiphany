@@ -1,5 +1,5 @@
 {
-    "name": "epiphany",
+    "name": "@kruining/epiphany",
     "description": "",
     "license": "MIT",
     "exports": {
