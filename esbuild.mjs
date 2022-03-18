@@ -8,7 +8,7 @@ const conf = {
     minify: true,
     platform: 'node',
     target: [ 'esnext' ],
-    external: [ 'react', 'react-dom' ],
+    // external: [ 'react', 'react-dom' ],
 };
 
 await build({
