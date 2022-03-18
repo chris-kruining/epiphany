@@ -3,7 +3,7 @@ import { build } from 'esbuild';
 const conf = {
     entryPoints: [ 'src/index.ts' ],
     outbase: 'src',
-    bundle: true,
+    bundle: false,
     sourcemap: true,
     minify: true,
     platform: 'node',
