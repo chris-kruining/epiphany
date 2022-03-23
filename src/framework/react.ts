@@ -54,7 +54,7 @@ function getChildren(node: FiberNode): FiberNode[]
 
 function fiberToNode(fiber: FiberNode, flavor: Flavor<FiberNode>, recurse: boolean = false): Node
 {
-    const { index, key, tag, type, _debugID, stateNode } = fiber;
+    const { index, key, tag, type, _debugID } = fiber;
     const details = flavor.getDetails(fiber);
 
     const displayName: string = match(tag)
@@ -73,7 +73,6 @@ function fiberToNode(fiber: FiberNode, flavor: Flavor<FiberNode>, recurse: boole
         key,
         tag,
         displayName,
-        element: stateNode,
         children: recurse
             ? getChildren(fiber).map(f => fiberToNode(f, flavor, recurse))
             : [],

@@ -24,7 +24,7 @@ export function Epiphany()
             // initialize: (framework: string, flavor: string) => {
             //
             // },
-            getTree: () => framework.getNodeFromElement(document.documentElement, flavor),
+            getTree: () => framework.getNodeFromElement(document.documentElement, flavor, true),
             getElementFromPoint: (x: number, y: number) => {
                 const element = document.elementFromPoint(x, y);
 
