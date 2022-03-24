@@ -52,10 +52,10 @@ function getChildren(node: FiberNode): FiberNode[]
     return children;
 }
 
-function fiberToNode(fiber: FiberNode, flavor: Flavor<FiberNode>, recurse: boolean = false): Node
+async function fiberToNode(fiber: FiberNode, flavor: Flavor<FiberNode>, recurse: boolean = false): Promise<Node>
 {
     const { index, key, tag, type, _debugID } = fiber;
-    const details = flavor.getDetails(fiber);
+    const details = await flavor.getDetails(fiber);
 
     const displayName: string = match(tag)
         .with(Tag.Element, () => type)
@@ -74,12 +74,12 @@ function fiberToNode(fiber: FiberNode, flavor: Flavor<FiberNode>, recurse: boole
         tag,
         displayName,
         children: recurse
-            ? getChildren(fiber).map(f => fiberToNode(f, flavor, recurse))
+            ? await Promise.all(getChildren(fiber).map(f => fiberToNode(f, flavor, recurse)))
             : [],
     };
 }
 
-export function getNodeFromElement(element: Element, flavor: Flavor<FiberNode>, recurse: boolean = false): Node
+export async function getNodeFromElement(element: Element, flavor: Flavor<FiberNode>, recurse: boolean = false): Promise<Node>
 {
     return fiberToNode(getFiber(element), flavor, recurse);
 }
