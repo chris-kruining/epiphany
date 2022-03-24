@@ -21,7 +21,7 @@ export function Epiphany()
     }
 
     useEffect(() => {
-        SourceMapConsumer.initialize({
+        (SourceMapConsumer as any).initialize({
             "lib/mappings.wasm": "https://unpkg.com/source-map@0.7.3/lib/mappings.wasm",
         });
 
