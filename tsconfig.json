@@ -12,7 +12,7 @@
         "module": "esnext",
         "target": "esnext",
         "rootDir": "src",
-        "outDir": "lib",
+        "outFile": "lib/index.d.ts",
         "jsx": "react-jsx",
         "strict": true,
         "esModuleInterop": true,

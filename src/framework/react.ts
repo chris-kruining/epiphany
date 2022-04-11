@@ -61,10 +61,10 @@ async function fiberToNode(fiber: FiberNode, flavor: Flavor<FiberNode>, recurse:
         .with(Tag.Element, () => type)
         .with(Tag.Class, () => type.constructor.name)
         .with(Tag.Function, () => type.name)
-        .with(Tag.Text, () => 'TEXT_NODE')
+        .with(Tag.Text, () => fiber.memoizedProps)
         .with(Tag.ContextProvider, () => 'Context.Provider')
-        .with(Tag.Forward, () => 'FORWARD')
-        .otherwise(() => 'COMPLEX_TYPE')
+        .with(Tag.Forward, () => type.render.displayName)
+        .otherwise(() => 'UNHANDLED_TYPE')
 
     return {
         ...details, // Details first so that they do not override any of the props beneath
