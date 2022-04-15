@@ -1,6 +1,6 @@
 {
     "include": [
-        "src/**/*.ts",
+        "src/index.ts",
     ],
     "exclude": [
         "lib/**/*.ts",
@@ -12,7 +12,7 @@
         "module": "esnext",
         "target": "esnext",
         "rootDir": "src",
-        "outFile": "lib/index.d.ts",
+        "outDir": "lib",
         "jsx": "react-jsx",
         "strict": true,
         "esModuleInterop": true,
