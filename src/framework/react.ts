@@ -1,5 +1,6 @@
-import { Flavor, Node } from '../types.js';
+import { Context, Flavor, Node } from '../types.js';
 import { match } from 'ts-pattern';
+import { uuid } from '~/utility.js';
 
 export type FiberNode = {
     index: number,
@@ -31,6 +32,9 @@ export enum Tag
     Suspense = 13,
 }
 
+const fiberCache: WeakMap<FiberNode, Node> = new WeakMap;
+const nodeMap: Map<string, Node> = new Map;
+
 function getFiber(element: Element): FiberNode
 {
     const fiberKey = Object.getOwnPropertyNames(element).find(n => n.startsWith('__reactFiber'))!;
@@ -52,31 +56,45 @@ function getChildren(node: FiberNode): FiberNode[]
     return children;
 }
 
-async function fiberToNode(fiber: FiberNode, flavor: Flavor<FiberNode>, recurse: boolean = false): Promise<Node>
+async function fiberToNode(fiber: FiberNode, flavor: Flavor<FiberNode>, recurse: boolean = false, context?: Context): Promise<Node>
 {
-    const { index, key, tag, type, _debugID } = fiber;
-    const details = await flavor.getDetails(fiber);
+    if(fiberCache.has(fiber) === false)
+    {
+        const { index, key, tag, type } = fiber;
+        const [ details, newContext ] = await flavor.getDetails(fiber, context);
+        const id = uuid();
 
-    const displayName: string = match(tag)
-        .with(Tag.Element, () => type)
-        .with(Tag.Class, () => type.constructor.name)
-        .with(Tag.Function, () => type.name)
-        .with(Tag.Text, () => fiber.memoizedProps)
-        .with(Tag.ContextProvider, () => 'Context.Provider')
-        .with(Tag.Forward, () => type.render.displayName)
-        .otherwise(() => 'UNHANDLED_TYPE')
+        const displayName: string = match(tag)
+            .with(Tag.Element, () => type)
+            .with(Tag.Class, () => type.constructor.name)
+            .with(Tag.Function, () => type.name)
+            .with(Tag.Text, () => fiber.memoizedProps)
+            .with(Tag.ContextProvider, () => 'Context.Provider')
+            .with(Tag.Forward, () => type.render.displayName)
+            .otherwise(() => 'UNHANDLED_TYPE')
 
-    return {
-        ...details, // Details first so that they do not override any of the props beneath
-        id: _debugID,
-        index,
-        key,
-        tag,
-        displayName,
-        children: recurse
-            ? await Promise.all(getChildren(fiber).map(f => fiberToNode(f, flavor, recurse)))
-            : [],
-    };
+        const node = {
+            ...details, // Details first so that they do not override any of the props beneath
+            id,
+            index,
+            key,
+            tag,
+            displayName,
+            children: recurse
+                ? await Promise.all(getChildren(fiber).map(f => fiberToNode(f, flavor, recurse, newContext ?? context)))
+                : [],
+        };
+
+        fiberCache.set(fiber, node);
+        nodeMap.set(id, node);
+    }
+
+    return fiberCache.get(fiber)!;
+}
+
+export async function getNode(id: string, flavor: Flavor<FiberNode>): Promise<Node|undefined>
+{
+    return nodeMap.get(id);
 }
 
 export async function getNodeFromElement(element: Element, flavor: Flavor<FiberNode>, recurse: boolean = false): Promise<Node>

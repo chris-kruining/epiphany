@@ -3,6 +3,7 @@
     "description": "",
     "license": "MIT",
     "exports": {
+        "types": "./lib/index.d.ts",
         "import": "./lib/index.mjs",
         "require": "./lib/index.cjs",
         "default": "./lib/index.mjs"
