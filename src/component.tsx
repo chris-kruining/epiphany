@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { expose, windowEndpoint } from 'comlink';
 import { Bridge, Framework, Flavor } from './types.js';
-import { FiberNode, getNodeFromElement } from './framework/react.js';
+import { FiberNode, getNodeFromElement, getNode } from './framework/react.js';
 import { getDetails } from './flavor/remix.js';
 import React from 'react';
 import { SourceMapConsumer } from 'source-map';
 
 const framework: Framework<FiberNode> = {
+    getNode,
     getNodeFromElement,
 };
 const flavor: Flavor<FiberNode> = {
@@ -26,11 +27,9 @@ export function Epiphany()
         });
 
         const bridge: Bridge = {
-            // initialize: (framework: string, flavor: string) => {
-            //
-            // },
             getTree: () => framework.getNodeFromElement(document.documentElement, flavor, true),
-            getElementFromPoint: async (x: number, y: number) => {
+            getNode: (id: string) => framework.getNode(id, flavor),
+            getNodeFromPoint: async (x: number, y: number) => {
                 const element = document.elementFromPoint(x, y);
 
                 return element
