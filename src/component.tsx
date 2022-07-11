@@ -37,7 +37,12 @@ export function Epiphany()
                     : undefined;
             },
             clickAt: async (x: number, y: number) => {
-                document.elementFromPoint(x, y)?.dispatchEvent(new MouseEvent('click', { clientX: x, clientY: y }));
+                document.elementFromPoint(x, y)?.dispatchEvent(new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    clientX: x,
+                    clientY: y
+                }));
             },
         };
 
