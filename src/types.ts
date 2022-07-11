@@ -5,6 +5,7 @@ export interface Bridge
     getTree(): Promise<Node>,
     getNode(id: string): Promise<Node|undefined>,
     getNodeFromPoint(x: number, y: number): Promise<Node|undefined>,
+    clickAt(x: number, y: number): Promise<void>,
 }
 
 export type Framework<N> = {

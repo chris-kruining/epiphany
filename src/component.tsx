@@ -36,6 +36,9 @@ export function Epiphany()
                     ? await framework.getNodeFromElement(element, flavor)
                     : undefined;
             },
+            clickAt: async (x: number, y: number) => {
+                document.dispatchEvent(new MouseEvent('click', { clientX: x, clientY: y }));
+            },
         };
 
         expose(bridge, windowEndpoint(window.parent));
