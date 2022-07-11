@@ -36,7 +36,7 @@ export async function getDetails(node: FiberNode, context?: Context): Promise<[ 
                             ...Object.fromEntries(Object.entries(astNode).filter(([ key ]) => [ 'original', 'parent', 'children' ].includes(key) === false)),
                             file: astNode?.original.getSourceFile().fileName,
                         }
-                    : undefined,
+                        : undefined,
                 },
                 astNode !== undefined
                     ? { ast: astNode.children.at(1) }
