@@ -64,7 +64,7 @@ export async function getDetails(node: FiberNode, context?: Context): Promise<[ 
 
                 const vars = Array.from<RegExpMatchArray, string>((route?.path?.matchAll(/:(\w+)/g) ?? []), m => m[1]!);
 
-                let element: FiberNode = node.child!.child!.child!.child!.child!;
+                let element: FiberNode = node.child!.child!.child!.child!.child!.child!;
 
                 if(typeof element.type === 'function' && element.type.name === 'RemixErrorBoundary')
                 {
