@@ -29,7 +29,7 @@
         "typescript": "^4.6.2"
     },
     "devDependencies": {
-        "@kruining/waterlogged": "1.1.36",
+        "@kruining/waterlogged": "1.1.38",
         "@remix-run/react": "1.7.6",
         "@types/node": "18.11.9",
         "@types/react": "18.0.25",
