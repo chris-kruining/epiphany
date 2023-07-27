@@ -31,7 +31,7 @@
     "devDependencies": {
         "@kruining/waterlogged": "1.1.45",
         "@remix-run/react": "1.19.1",
-        "@types/node": "18.17.0",
+        "@types/node": "18.17.1",
         "@types/react": "18.2.17",
         "@types/react-dom": "18.2.7",
         "esbuild": "0.18.17"
